@@ -1,0 +1,101 @@
+#cloud-config
+
+# Update and upgrade packages
+package_update: true
+package_upgrade: true
+
+# Install required packages
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - lsb-release
+  - git
+  - ufw
+  - fail2ban
+  - unattended-upgrades
+
+# Configure automatic security updates
+write_files:
+  - path: /etc/apt/apt.conf.d/50unattended-upgrades
+    content: |
+      Unattended-Upgrade::Allowed-Origins {
+        "$${distro_id}:$${distro_codename}";
+        "$${distro_id}:$${distro_codename}-security";
+      };
+      Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+      Unattended-Upgrade::MinimalSteps "true";
+      Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+      Unattended-Upgrade::Remove-Unused-Dependencies "true";
+      Unattended-Upgrade::Automatic-Reboot "false";
+
+  - path: /etc/docker/daemon.json
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      }
+
+  - path: /root/.bashrc
+    append: true
+    content: |
+      # Docker aliases
+      alias dc='docker compose'
+      alias dps='docker ps'
+      alias dlogs='docker compose logs -f'
+
+# Run commands
+runcmd:
+  # Install Docker
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+  - echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+  - apt-get update
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  
+  # Start and enable Docker
+  - systemctl start docker
+  - systemctl enable docker
+  
+  # Configure UFW firewall
+  - ufw --force enable
+  - ufw default deny incoming
+  - ufw default allow outgoing
+  - ufw allow 22/tcp
+  - ufw allow 80/tcp
+  - ufw allow 443/tcp
+  
+  # Configure fail2ban
+  - systemctl enable fail2ban
+  - systemctl start fail2ban
+  
+  # Create application directory
+  - mkdir -p /opt/${project_name}
+  - cd /opt/${project_name}
+  
+  # Set timezone
+  - timedatectl set-timezone Europe/Zurich
+  
+  # Disable unnecessary services
+  - systemctl disable snapd
+  
+  # Clean up
+  - apt-get autoremove -y
+  - apt-get clean
+
+# Final message
+final_message: |
+  ====================================================================
+  Server setup completed successfully!
+  
+  Project: ${project_name}
+  Docker version: $(docker --version)
+  Docker Compose version: $(docker compose version)
+  
+  Application directory: /opt/${project_name}
+  
+  Cloud-init finished at: $TIMESTAMP
+  ====================================================================

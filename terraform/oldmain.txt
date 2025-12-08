@@ -1,0 +1,89 @@
+terraform {
+  required_version = ">= 1.0"
+  
+  required_providers {
+    hcloud = {
+      source  = "hetznercloud/hcloud"
+      version = "~> 1.45"
+    }
+  }
+}
+
+provider "hcloud" {
+  token = var.hcloud_token
+}
+
+# SSH Key für Server-Zugriff
+resource "hcloud_ssh_key" "default" {
+  name       = "${var.project_name}-key"
+  public_key = var.ssh_public_key
+}
+
+# Firewall Regeln
+resource "hcloud_firewall" "default" {
+  name = "${var.project_name}-firewall"
+
+  # SSH
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = "22"
+    source_ips = var.allowed_ssh_ips
+  }
+
+  # HTTP
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = "80"
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+
+  # HTTPS
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = "443"
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+}
+
+# Application Server
+resource "hcloud_server" "app_server" {
+  name        = "${var.project_name}-server"
+  server_type = var.server_type
+  image       = "ubuntu-24.04"
+  location    = var.location
+  ssh_keys    = [hcloud_ssh_key.default.id]
+  firewall_ids = [hcloud_firewall.default.id]
+
+  user_data = templatefile("${path.module}/cloud-init.yaml", {
+    docker_compose_version = var.docker_compose_version
+    project_name          = var.project_name
+  })
+
+  labels = {
+    project = var.project_name
+    managed_by = "terraform"
+  }
+
+  # Prevent accidental deletion
+  lifecycle {
+    prevent_destroy = false
+  }
+}
+
+# Primary IPv4 Address
+resource "hcloud_primary_ip" "server_ipv4" {
+  name          = "${var.project_name}-ipv4"
+  type          = "ipv4"
+  assignee_id   = hcloud_server.app_server.id
+  auto_delete   = false
+  datacenter_name = hcloud_server.app_server.datacenter
+}

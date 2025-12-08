@@ -1,0 +1,71 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Angular
+/frontend/dist/
+/frontend/.angular/
+/frontend/coverage/
+
+# Java/Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+.classpath
+.project
+.settings/
+
+# Gradle
+.gradle/
+build/
+
+# Package Files
+*.zip
+*.tar.gz
+*.rar
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+!*.crt.example
+
+# Local config
+local/
+*.local
+
+# Docker
+.dockerignore

@@ -1,0 +1,51 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+*.env
+!.env.example
+
+# Build artifacts
+target/
+build/
+dist/
+node_modules/
+.gradle/
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.crt
+
+# Local config
+local/
+*.local

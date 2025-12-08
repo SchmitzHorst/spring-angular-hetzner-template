@@ -1,0 +1,31 @@
+# Copy this file to terraform.tfvars and fill in your values
+# DO NOT commit terraform.tfvars to git!
+
+# Hetzner Cloud API Token
+# Get it from: https://console.hetzner.cloud -> Your Project -> Security -> API Tokens
+hcloud_token = "your-hetzner-api-token-here"
+
+# Your SSH public key for server access
+# Get it with: cat ~/.ssh/id_rsa.pub (or id_ed25519.pub)
+ssh_public_key = "ssh-rsa AAAAB3... your-email@example.com"
+
+# Project configuration
+project_name = "spring-angular-app"
+
+# Server configuration
+server_type = "cx21"  # cx21: 2 vCPU, 4GB RAM (~5.83 EUR/month)
+                       # cx31: 2 vCPU, 8GB RAM (~9.72 EUR/month)
+                       # cx41: 4 vCPU, 16GB RAM (~18.54 EUR/month)
+
+location = "nbg1"  # nbg1: Nuremberg, Germany
+                   # fsn1: Falkenstein, Germany
+                   # hel1: Helsinki, Finland
+
+# Security: Restrict SSH access to your IP (recommended for production)
+# Get your IP: curl -s https://api.ipify.org
+allowed_ssh_ips = [
+  "0.0.0.0/0"  # WARNING: Allows SSH from anywhere! Change to your IP: "1.2.3.4/32"
+]
+
+# Optional: Your domain name for SSL setup
+# domain_name = "example.com"

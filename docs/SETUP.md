@@ -259,7 +259,7 @@ Fill in:
 hcloud_token = "YOUR_HETZNER_API_TOKEN"
 ssh_public_key = "ssh-ed25519 AAAA... your-email@example.com"
 project_name = "my-app"
-server_type = "cx21"
+server_type = "cx22"  # 2 vCPU, 4GB RAM, ~4.90 EUR/month
 location = "nbg1"  # Nuremberg, Germany
 allowed_ssh_ips = ["YOUR_IP/32"]  # Get your IP: curl -s https://api.ipify.org
 ```

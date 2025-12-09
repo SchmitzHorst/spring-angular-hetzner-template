@@ -68,7 +68,7 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: update  # Creates tables automatically - use 'validate' with Flyway/Liquibase in production
 
 logging:
   level:

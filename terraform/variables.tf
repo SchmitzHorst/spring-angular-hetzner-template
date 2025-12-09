@@ -18,11 +18,11 @@ variable "project_name" {
 variable "server_type" {
   description = "Hetzner Cloud server type"
   type        = string
-  default     = "cx21" # 2 vCPU, 4 GB RAM, 40 GB SSD - ~5.83 EUR/month
+  default     = "cx22" # 2 vCPU, 4 GB RAM, 40 GB SSD - ~4.90 EUR/month
   
   validation {
     condition     = can(regex("^(cx[0-9]{2}|cpx[0-9]{2}|ccx[0-9]{2})$", var.server_type))
-    error_message = "Server type must be a valid Hetzner Cloud type (e.g., cx21, cx31, cpx11)"
+    error_message = "Server type must be a valid Hetzner Cloud type (e.g., cx22, cx32, cpx11)"
   }
 }
 

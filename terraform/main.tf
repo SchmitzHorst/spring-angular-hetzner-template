@@ -1,6 +1,6 @@
 terraform {
   required_version = ">= 1.0"
-
+  
   required_providers {
     hcloud = {
       source  = "hetznercloud/hcloud"
@@ -47,6 +47,17 @@ resource "hcloud_firewall" "default" {
     direction = "in"
     protocol  = "tcp"
     port      = "443"
+    source_ips = [
+      "0.0.0.0/0",
+      "::/0"
+    ]
+  }
+
+  # Backend API (Development/Testing only - remove in production)
+  rule {
+    direction = "in"
+    protocol  = "tcp"
+    port      = "8080"
     source_ips = [
       "0.0.0.0/0",
       "::/0"

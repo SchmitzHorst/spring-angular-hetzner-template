@@ -65,7 +65,7 @@ This directory contains Terraform configuration for deploying the infrastructure
 
 - **Hetzner Cloud Server** (Ubuntu 24.04)
   - Docker & Docker Compose pre-installed
-  - Firewall configured (SSH, HTTP, HTTPS)
+  - Firewall configured (SSH, HTTP, HTTPS, Backend API)
   - Automatic security updates enabled
   - fail2ban for SSH protection
 
@@ -73,16 +73,21 @@ This directory contains Terraform configuration for deploying the infrastructure
   - Port 22 (SSH) - restricted to your IP
   - Port 80 (HTTP) - open to all
   - Port 443 (HTTPS) - open to all
+  - Port 8080 (Backend API) - open to all (for development/testing)
 
 - **SSH Key** - for secure server access
+
+**Note:** Port 8080 is open for development/testing. In production, close this port and route all traffic through Traefik on ports 80/443.
 
 ## Server Costs
 
 | Server Type | vCPU | RAM  | Storage | Price/Month |
 |-------------|------|------|---------|-------------|
-| cx21        | 2    | 4GB  | 40GB    | ~5.83 EUR   |
-| cx31        | 2    | 8GB  | 80GB    | ~9.72 EUR   |
-| cx41        | 4    | 16GB | 160GB   | ~18.54 EUR  |
+| cx22        | 2    | 4GB  | 40GB    | ~4.90 EUR   |
+| cx32        | 2    | 8GB  | 80GB    | ~9.50 EUR   |
+| cx42        | 4    | 16GB | 160GB   | ~18.50 EUR  |
+| cpx11       | 2    | 2GB  | 40GB    | ~4.75 EUR   |
+| cpx21       | 3    | 4GB  | 80GB    | ~8.90 EUR   |
 
 ## Post-Deployment
 

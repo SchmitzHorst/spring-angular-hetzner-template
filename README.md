@@ -21,11 +21,13 @@
 
 - [Terraform](https://www.terraform.io/downloads) >= 1.0
 - [Docker](https://docs.docker.com/get-docker/)
-- [Node.js](https://nodejs.org/) >= 20
+- [Node.js](https://nodejs.org/) >= 20 (for frontend development)
 - [Java](https://adoptium.net/) >= 21
 - [Maven](https://maven.apache.org/) >= 3.9
 - [Hetzner Cloud Account](https://console.hetzner.cloud)
 - [GitHub Account](https://github.com)
+
+**Note:** Frontend is currently a minimal placeholder. You'll develop the full Angular app locally.
 
 ### 1. Use This Template
 
@@ -214,8 +216,9 @@ DOCKER_REGISTRY=ghcr.io/username/repo
 
 ## API Endpoints
 
-### Backend (http://localhost:8080)
+### Backend (http://localhost:8080 or http://YOUR_SERVER_IP:8080)
 
+**Currently available:**
 - `GET /api/items` - Get all items
 - `GET /api/items/{id}` - Get item by ID
 - `GET /api/items/search?name=...` - Search items
@@ -227,7 +230,9 @@ DOCKER_REGISTRY=ghcr.io/username/repo
 
 ### Frontend (http://localhost:4200)
 
-Angular application with routing to backend API.
+**Status:** Minimal placeholder HTML. Full Angular application to be developed.
+
+The template provides the infrastructure and backend. You'll build the Angular frontend locally and deploy it.
 
 ## Deployment
 
@@ -285,9 +290,11 @@ Access at: `http://traefik.YOUR_DOMAIN` (requires authentication)
 
 | Server | vCPU | RAM | Storage | Price/Month |
 |--------|------|-----|---------|-------------|
-| CX21   | 2    | 4GB | 40GB    | ~5.83 EUR   |
-| CX31   | 2    | 8GB | 80GB    | ~9.72 EUR   |
-| CX41   | 4    | 16GB| 160GB   | ~18.54 EUR  |
+| CX22   | 2    | 4GB | 40GB    | ~4.90 EUR   |
+| CX32   | 2    | 8GB | 80GB    | ~9.50 EUR   |
+| CX42   | 4    | 16GB| 160GB   | ~18.50 EUR  |
+| CPX11  | 2    | 2GB | 40GB    | ~4.75 EUR   |
+| CPX21  | 3    | 4GB | 80GB    | ~8.90 EUR   |
 
 ### Additional Costs
 - Domain: ~10 EUR/year (optional)

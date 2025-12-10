@@ -54,15 +54,6 @@ resource "hcloud_firewall" "default" {
   }
 
   # Backend API (Development/Testing only - remove in production)
-  rule {
-    direction = "in"
-    protocol  = "tcp"
-    port      = "8080"
-    source_ips = [
-      "0.0.0.0/0",
-      "::/0"
-    ]
-  }
 }
 
 # Application Server

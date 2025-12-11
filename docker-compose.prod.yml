@@ -56,7 +56,10 @@ services:
 
   # Spring Boot Backend
   backend:
-    image: ${DOCKER_REGISTRY}/backend:${IMAGE_TAG:-latest}
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: spring-angular-app-backend:local
     container_name: spring-backend
     restart: unless-stopped
     environment:
@@ -87,7 +90,10 @@ services:
 
   # Angular Frontend
   frontend:
-    image: ${DOCKER_REGISTRY}/frontend:${IMAGE_TAG:-latest}
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: spring-angular-app-frontend:local
     container_name: angular-frontend
     restart: unless-stopped
     depends_on:

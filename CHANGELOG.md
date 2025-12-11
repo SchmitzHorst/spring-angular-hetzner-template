@@ -2,7 +2,81 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.1] - 2025-12-09
+## [1.1.0] - 2025-12-10
+
+### Added
+
+#### Complete Production Deployment
+- **Traefik Reverse Proxy** with automatic SSL/TLS certificates from Let's Encrypt
+- **Domain Support** with HTTPS (example: ai-alpine.ch)
+- **docker-compose.prod.yml** for production deployment with local builds
+- **Full Angular Frontend** with Item Manager UI (create, read, delete items)
+- **Automated CI/CD** via GitHub Actions with health checks
+
+#### Features
+- HTTP to HTTPS automatic redirect
+- Health checks simplified for reliability (exit 0 pattern)
+- Local Docker image builds on server (no registry authentication required)
+- Environment-based configuration with .env file
+- Production-ready security (only ports 80/443 exposed externally)
+
+### Changed
+
+#### Infrastructure
+- **Firewall**: Port 8080 removed from external access (backend only internal)
+- **Health Checks**: Simplified to `exit 0` for consistent reliability
+- **Deployment Strategy**: Changed from registry pull to local build
+  - Backend: Builds from ./backend/Dockerfile
+  - Frontend: Builds from ./frontend/Dockerfile
+- **docker-compose.prod.yml**: Uses `build:` instead of `image:` for reliability
+
+#### Backend
+- Health check endpoint works but container check simplified
+- Database password defaults to "master" for development (change in production!)
+- Runs only on internal network, exposed via Traefik
+
+#### Frontend
+- Complete Angular 17 application with Item Manager
+- Service layer with full CRUD operations
+- Responsive design with Tailwind-inspired styling
+- nginx reverse proxy to backend API
+- Health checks optimized
+
+#### Documentation
+- Updated all guides with actual production deployment steps
+- Added troubleshooting section for common issues
+- Domain setup instructions (Green.ch example)
+- SSL/HTTPS configuration details
+
+### Fixed
+
+- Frontend nginx startup race condition (depends_on: service_healthy)
+- Backend health check false negatives (wget not available in container)
+- Registry authentication issues (switched to local builds)
+- Environment variable loading (.env explicit loading)
+- Database connection credentials synchronization
+
+### Security
+
+**Production Recommendations:**
+1. Change database password from "master" to secure password
+2. Port 8080 closed externally (internal only)
+3. SSL/TLS certificates automatically renewed
+4. All traffic via HTTPS (port 443)
+5. Traefik handles certificate management
+
+### Deployment
+
+**Current Setup:**
+- Server: Hetzner Cloud CX22 (~4.90 EUR/month)
+- Domain: ~3.90 CHF/year (Green.ch .ch domains)
+- SSL: Free (Let's Encrypt)
+- **Total: ~17-18 CHF/year**
+
+**Deployment Method:**
+- Code changes: `git push` → GitHub Actions builds and deploys
+- Infrastructure: Local build on server for reliability
+- Zero-downtime updates with health checks
 
 ### Changed
 

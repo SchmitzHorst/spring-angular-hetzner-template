@@ -26,8 +26,9 @@
 - [Maven](https://maven.apache.org/) >= 3.9
 - [Hetzner Cloud Account](https://console.hetzner.cloud)
 - [GitHub Account](https://github.com)
+- [Domain](https://www.green.ch) (optional but recommended, ~3.90 CHF/year for .ch domains)
 
-**Note:** Frontend is currently a minimal placeholder. You'll develop the full Angular app locally.
+**Note:** Full Angular frontend with Item Manager is included and ready to use.
 
 ### 1. Use This Template
 
@@ -216,9 +217,9 @@ DOCKER_REGISTRY=ghcr.io/username/repo
 
 ## API Endpoints
 
-### Backend (http://localhost:8080 or http://YOUR_SERVER_IP:8080)
+### Production (https://your-domain.com)
 
-**Currently available:**
+**Backend API:**
 - `GET /api/items` - Get all items
 - `GET /api/items/{id}` - Get item by ID
 - `GET /api/items/search?name=...` - Search items
@@ -228,11 +229,19 @@ DOCKER_REGISTRY=ghcr.io/username/repo
 - `GET /api/items/health` - Health check
 - `GET /actuator/health` - Spring Actuator health
 
-### Frontend (http://localhost:4200)
+**Frontend:** Available at root URL (/)
 
-**Status:** Minimal placeholder HTML. Full Angular application to be developed.
+**Example:** If your domain is `ai-alpine.ch`:
+- Frontend: `https://ai-alpine.ch`
+- Backend API: `https://ai-alpine.ch/api/items`
+- Health: `https://ai-alpine.ch/api/items/health`
 
-The template provides the infrastructure and backend. You'll build the Angular frontend locally and deploy it.
+### Local Development
+
+**Backend:** http://localhost:8080/api
+**Frontend:** http://localhost:4200
+
+The template provides full infrastructure with Traefik reverse proxy, automatic SSL, and CI/CD pipeline.
 
 ## Deployment
 
@@ -437,6 +446,3 @@ Created with ❤️ by [Your Name]
 ---
 
 **Happy Coding! 🚀**
-## CI/CD Test
-
-## CI/CD Active

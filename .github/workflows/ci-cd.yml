@@ -127,20 +127,20 @@ jobs:
           ssh -i ~/.ssh/deploy_key root@${{ secrets.SERVER_HOST }} << 'ENDSSH'
             cd /opt/spring-angular-app
             
-            # Login to GitHub Container Registry
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # Pull latest code changes
+            git pull origin main
             
-            # Pull latest images
-            docker compose pull
+            # Build images locally
+            docker compose -f docker-compose.prod.yml build
             
-            # Restart services
-            docker compose up -d
+            # Restart services with env file
+            docker compose -f docker-compose.prod.yml --env-file .env up -d
             
             # Clean up old images
             docker image prune -af
             
             # Show status
-            docker compose ps
+            docker compose -f docker-compose.prod.yml ps
           ENDSSH
       
       - name: Health check

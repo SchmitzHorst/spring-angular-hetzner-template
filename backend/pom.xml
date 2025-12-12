@@ -44,11 +44,19 @@
         </dependency>
         
         <!-- Spring Boot Actuator (Health checks) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        
+	<!-- Spring Boot Actuator for Metrics -->
+	<dependency>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-actuator</artifactId>
+	</dependency>
+
+	<!-- Micrometer Prometheus Registry -->
+	<dependency>
+	    <groupId>io.micrometer</groupId>
+	    <artifactId>micrometer-registry-prometheus</artifactId>
+	    <scope>runtime</scope>
+	</dependency>
+		        
         <!-- Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

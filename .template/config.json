@@ -1,0 +1,10 @@
+{
+  "id": "bootstrap5",
+  "displayName": "Bootstrap 5",
+  "description": "Bootstrap 5.3 – bewährt, responsive, schnell",
+  "cssFramework": "bootstrap",
+  "styleType": "css",
+  "budgetWarningKb": 500,
+  "budgetErrorKb": 1000,
+  "excludeOnClone": [".template"]
+}

@@ -1,0 +1,91 @@
+{
+  "version": "1.0",
+  "framework": "bootstrap5",
+  "angularVersion": "17.3",
+
+  "imports": {
+    "description": "Standard Angular imports for a Bootstrap 5 CRUD component",
+    "component": [
+      "CommonModule",
+      "FormsModule",
+      "ReactiveFormsModule"
+    ],
+    "nav": [
+      "CommonModule",
+      "RouterLink",
+      "RouterLinkActive"
+    ],
+    "home": [
+      "CommonModule",
+      "RouterLink"
+    ]
+  },
+
+  "button": {
+    "primary": "<button class=\"btn btn-primary\">Label</button>",
+    "secondary": "<button class=\"btn btn-secondary\">Label</button>",
+    "icon": "<button class=\"btn btn-sm btn-primary\" title=\"Tooltip\"><i class=\"bi bi-pencil\"></i></button>",
+    "danger": "<button class=\"btn btn-sm btn-danger\" title=\"Delete\"><i class=\"bi bi-trash\"></i></button>"
+  },
+
+  "input": {
+    "text": "<div class=\"mb-3\">\n  <label class=\"form-label\">Label</label>\n  <input type=\"text\" class=\"form-control\" [(ngModel)]=\"model.field\" name=\"field\" required>\n</div>",
+    "select": "<div class=\"mb-3\">\n  <label class=\"form-label\">Label</label>\n  <select class=\"form-select\" [(ngModel)]=\"model.field\" name=\"field\" required>\n    <option *ngFor=\"let opt of options\" [value]=\"opt.value\">{{ opt.label }}</option>\n  </select>\n</div>",
+    "date": "<div class=\"mb-3\">\n  <label class=\"form-label\">Date</label>\n  <input type=\"date\" class=\"form-control\" [(ngModel)]=\"model.dateField\" name=\"dateField\">\n</div>",
+    "textarea": "<div class=\"mb-3\">\n  <label class=\"form-label\">Label</label>\n  <textarea class=\"form-control\" [(ngModel)]=\"model.field\" name=\"field\" rows=\"3\"></textarea>\n</div>"
+  },
+
+  "table": {
+    "description": "Bootstrap table with striped rows and hover effect",
+    "html": "<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n      <th>Column 1</th>\n      <th>Column 2</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let item of items\">\n      <td>{{ item.col1 }}</td>\n      <td>{{ item.col2 }}</td>\n      <td>\n        <button class=\"btn btn-sm btn-primary me-1\" (click)=\"selectForEdit(item)\">Edit</button>\n        <button class=\"btn btn-sm btn-danger\" (click)=\"delete(item.id!)\">Delete</button>\n      </td>\n    </tr>\n    <tr *ngIf=\"items.length === 0\">\n      <td colspan=\"3\" class=\"text-center text-muted\">No data found.</td>\n    </tr>\n  </tbody>\n</table>"
+  },
+
+  "card": {
+    "basic": "<div class=\"card\">\n  <div class=\"card-header\">Title</div>\n  <div class=\"card-body\">\n    <h5 class=\"card-title\">Title</h5>\n    <p class=\"card-text\">Content</p>\n    <button class=\"btn btn-primary\">Action</button>\n  </div>\n</div>",
+    "form": "<div class=\"card\">\n  <div class=\"card-header\">{{ selectedItem?.id ? 'Edit' : 'New' }} Entity</div>\n  <div class=\"card-body\">\n    <form #form=\"ngForm\" (ngSubmit)=\"save()\">\n      <!-- form-group inputs here -->\n      <div class=\"d-flex gap-2\">\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"form.invalid\">Save</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"reset()\">Cancel</button>\n      </div>\n    </form>\n  </div>\n</div>"
+  },
+
+  "dialog": {
+    "confirmDelete": "if (confirm('Delete this item?')) {\n  this.service.delete(id).subscribe(() => this.loadAll());\n}",
+    "open": "// Bootstrap does not have a programmatic dialog service.\n// Use browser confirm() or implement a Bootstrap modal component."
+  },
+
+  "snackbar": {
+    "description": "Bootstrap does not have a snackbar. Use a toast or inline alert.",
+    "alertSuccess": "<div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n  Saved successfully!\n  <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\"></button>\n</div>",
+    "alertError": "<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n  An error occurred.\n  <button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"alert\"></button>\n</div>"
+  },
+
+  "navbar": {
+    "description": "Bootstrap navbar with collapse support",
+    "html": "<nav class=\"navbar navbar-expand-lg navbar-dark bg-primary\">\n  <div class=\"container-fluid\">\n    <a class=\"navbar-brand\" routerLink=\"/home\">App</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarNav\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNav\">\n      <ul class=\"navbar-nav\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLink=\"/home\" routerLinkActive=\"active\">Home</a>\n        </li>\n        <!-- NAV_ITEMS -->\n      </ul>\n    </div>\n  </div>\n</nav>"
+  },
+
+  "listView": {
+    "description": "Full list-view layout: Bootstrap grid with table on left and form card on right",
+    "layout": "Two-column Bootstrap grid: col-md-8 = table, col-md-4 = form card (hidden when nothing selected)",
+    "html": "<div class=\"container-fluid\">\n  <div class=\"row mb-3 align-items-center\">\n    <div class=\"col\">\n      <h2>ENTITY_PLURAL</h2>\n    </div>\n    <div class=\"col-auto\">\n      <button class=\"btn btn-primary\" *ngIf=\"!selectedItem\" (click)=\"startCreate()\">\n        + New ENTITY\n      </button>\n    </div>\n  </div>\n\n  <div class=\"row\">\n    <!-- Table column -->\n    <div [class]=\"selectedItem ? 'col-md-8' : 'col-12'\">\n      <!-- Bootstrap table snippet here -->\n    </div>\n\n    <!-- Form card column -->\n    <div class=\"col-md-4\" *ngIf=\"selectedItem\">\n      <!-- Bootstrap card form snippet here -->\n    </div>\n  </div>\n</div>"
+  },
+
+  "promptHints": {
+    "description": "Rules the AI MUST follow when generating Bootstrap 5 Angular components",
+    "rules": [
+      "ALWAYS use Bootstrap 5 CSS classes. NEVER use Angular Material or bare unstyled HTML.",
+      "Container: <div class=\"container-fluid\"> — never use <div class=\"container\"> for full-width layouts.",
+      "Grid: use <div class=\"row\"> and <div class=\"col-md-8\"> / <div class=\"col-md-4\"> for two-column layouts.",
+      "Table: <table class=\"table table-striped table-hover\"> with <thead><tr><th> and <tbody><tr *ngFor>.",
+      "Buttons: class=\"btn btn-primary\" for primary, class=\"btn btn-secondary\" for secondary, class=\"btn btn-sm btn-danger\" for delete.",
+      "Form fields: <div class=\"mb-3\"><label class=\"form-label\"><input class=\"form-control\">",
+      "Select fields: <select class=\"form-select\"> — NOT <mat-select>.",
+      "Card wrapper for forms: <div class=\"card\"><div class=\"card-header\"><div class=\"card-body\">",
+      "Spacing: use Bootstrap spacing utilities (mb-3, mt-3, me-2, gap-2, etc.).",
+      "Use browser confirm() for delete confirmation — no custom modal HTML.",
+      "All components must be standalone: true.",
+      "NgModel binding: [(ngModel)]=\"selectedItem.field\" — always add name attribute.",
+      "For date fields use: <input type=\"date\" class=\"form-control\" [(ngModel)]=\"selectedItem.dateField\" name=\"dateField\">",
+      "Edit/Delete buttons in table rows: class=\"btn btn-sm btn-primary me-1\" and class=\"btn btn-sm btn-danger\"",
+      "NEVER import Angular Material from @angular/material.",
+      "NEVER use mat-* elements or directives."
+    ]
+  }
+}
